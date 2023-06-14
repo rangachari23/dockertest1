@@ -1,8 +1,26 @@
-FROM nginx:latest 
-MAINTAINER mavrick202@gmail.com 
-RUN apt install -y curl
-COPY index.html /usr/share/nginx/html/
-COPY scorekeeper.js /usr/share/nginx/html/
-COPY style.css /usr/share/nginx/html/
-#HEALTHCHECK CMD curl --fail http://localhost || exit 1
-CMD ["nginx", "-g", "daemon off;"]
+dockerfile
+FROM  centos:latest
+MAINTAINER enjetiranga000@gmail.com
+RUN yum install -y httpd \
+ zip\
+ unzip
+ADD https://www.free-css.com/assets/files/free-css-templates/download/page254/photogenic.zip /var/www/html/
+WORKDIR /var/www/html/
+RUN unzip photogenic.zip
+RUN cp -rvf photogenic/* .
+RUN rm -rf photogenic photogenic.zip
+CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
+EXPOSE 80 22
+
+
+# FROM  centos:latest
+# MAINTAINER enjetiranga000@gmail.com
+# RUN yum install -y httpd \
+#  zip\
+#  unzip
+#  ADD https://www.free-css.com/assets/files/free-css-templates/download/page265/shine.zip /var/www/html/
+#  WORKDIR /var/www/html/
+#  RUN unzip shine.zip
+#  RUN cp -rvf shine/* .
+#  RUN rm -rf shine shine.zip
+#  CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
